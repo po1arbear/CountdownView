@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.TextView
-import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -28,8 +27,6 @@ class CountdownView : TextView {
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
 
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        //TODO
-
         val typedArray = context?.obtainStyledAttributes(attrs, R.styleable.CountdownView)
         mDisabledBackground = typedArray?.getDrawable(R.styleable.CountdownView_disableBackground)
         mEnabledBackground = typedArray?.getDrawable(R.styleable.CountdownView_enableBackground)
@@ -38,7 +35,7 @@ class CountdownView : TextView {
         typedArray?.recycle()
     }
 
-    fun start(lifecycleProvider: LifecycleProvider<Any>) {
+    fun start(lifecycleProvider: MainActivity) {
         Observable.interval(0, 1, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -58,6 +55,7 @@ class CountdownView : TextView {
                         disable()
                     } else {
                         enable()
+                        text = t.toString()
                         mListener?.onProgress(t)
                     }
                 }
@@ -81,17 +79,17 @@ class CountdownView : TextView {
         mListener = listener
     }
 
-    fun disabledTextColor(color: Int): TextView {
+    fun disabledTextColor(color: Int): CountdownView {
         mDisabledTextColor = color
         return this
     }
 
-    fun enabledTextColor(color: Int): TextView {
+    fun enabledTextColor(color: Int): CountdownView {
         mEnabledTextColor = color
         return this
     }
 
-    fun enabledBackground(drawable: Drawable): TextView {
+    fun enabledBackground(drawable: Drawable): CountdownView {
         this.mEnabledBackground = drawable
         return this
     }
@@ -100,7 +98,7 @@ class CountdownView : TextView {
         this.mDisabledBackground = drawable
     }
 
-    fun endWords(words: String): TextView {
+    fun endWords(words: String): CountdownView {
         this.mEndWords = words
         return this
     }
@@ -108,12 +106,11 @@ class CountdownView : TextView {
     private fun disable() {
         mDisposable?.dispose()
         text = mEndWords
-        setTextColor(mEnabledTextColor!!)
+        setTextColor(mDisabledTextColor!!)
         background = mEnabledBackground
     }
 
     private fun enable() {
-        text = mTimeOut.toString()
         setTextColor(mDisabledTextColor!!)
         background = mDisabledBackground
     }
