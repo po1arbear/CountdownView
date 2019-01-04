@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CountdownView">
+        <attr name="enabledTextColor" format="color|reference"/>
+        <attr name="disabledTextColor" format="color|reference"/>
+        <attr name="enableBackground" format="reference"/>
+        <attr name="disableBackground" format="reference"/>
+
+    </declare-styleable>
+</resources>
