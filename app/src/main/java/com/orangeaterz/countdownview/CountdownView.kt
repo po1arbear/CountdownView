@@ -29,6 +29,13 @@ class CountdownView : TextView {
 
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         //TODO
+
+        val typedArray = context?.obtainStyledAttributes(attrs, R.styleable.CountdownView)
+        mDisabledBackground = typedArray?.getDrawable(R.styleable.CountdownView_disableBackground)
+        mEnabledBackground = typedArray?.getDrawable(R.styleable.CountdownView_enableBackground)
+        mDisabledTextColor = typedArray?.getColor(R.styleable.CountdownView_disabledTextColor, 0)
+        mEnabledTextColor = typedArray?.getColor(R.styleable.CountdownView_enableBackground, 0)
+        typedArray?.recycle()
     }
 
     fun start(lifecycleProvider: LifecycleProvider<Any>) {
