@@ -23,7 +23,11 @@ class MainActivity : RxAppCompatActivity() {
                 override fun onStart() {
                 }
 
-            }).start(this)
+                override fun onClick() {
+                    countdownView.start(this@MainActivity)
+                }
+
+            })
 
     }
 }

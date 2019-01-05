@@ -5,6 +5,9 @@ import android.graphics.drawable.Drawable
 import android.text.Html
 import android.util.AttributeSet
 import android.widget.TextView
+import com.trello.rxlifecycle2.LifecycleProvider
+import com.trello.rxlifecycle2.android.ActivityEvent
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -25,6 +28,13 @@ class CountdownView : TextView {
     private var mNumberColor: Int? = null
     private var mSuffixColor: Int? = null
     private var mSuffixText: String? = ""
+    private var mStatus = STATUS_ENABLED
+    private var mLifecycleProvider: LifecycleProvider<ActivityEvent>? = null
+
+    companion object {
+        const val STATUS_DISABLED = 0x001
+        const val STATUS_ENABLED = 0x002
+    }
 
     constructor(context: Context?) : this(context, null)
 
@@ -40,13 +50,17 @@ class CountdownView : TextView {
         mSuffixColor = typedArray?.getColor(R.styleable.CountdownView_suffixColor, 0)
         mSuffixText = typedArray?.getString(R.styleable.CountdownView_suffixText)
         typedArray?.recycle()
-
+        setOnClickListener {
+            if (mStatus == STATUS_ENABLED && mListener != null) {
+                mListener?.onClick()
+            }
+        }
     }
 
 //    tv.setText(Html.fromHtml( "<font color=#FF504B>"+Str1+"</font> "+ "<font color=#696969>"+Str2+"</font>"));
 
 
-    fun start(lifecycleProvider: MainActivity) {
+    fun start(lifecycleProvider: LifecycleProvider<ActivityEvent>) {
         Observable.interval(0, 1, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -67,12 +81,9 @@ class CountdownView : TextView {
                     } else {
                         disable()
                         val number = (mTimeOut!! - t).toString()
-//                        text = number
-//    tv.setText(Html.fromHtml( "<font color=#FF504B>"+Str1+"</font> "+ "<font color=#696969>"+Str2+"</font>"));
 
                         text =
                                 Html.fromHtml("<font color=$mNumberColor>$number</font> <font color=$mSuffixColor>$mSuffixText</font>")
-
                         mListener?.onProgress(mTimeOut!! - t)
                     }
                 }
@@ -90,6 +101,7 @@ class CountdownView : TextView {
         fun onProgress(progress: Long)
         fun onEnd()
         fun onError(e: Throwable)
+        fun onClick()
     }
 
     fun setOnCountdownListener(listener: OnCountdownListener): CountdownView {
@@ -122,15 +134,16 @@ class CountdownView : TextView {
     }
 
     private fun disable() {
-//        setTextColor(mDisabledTextColor!!)
-        background = mEnabledBackground
+        background = mDisabledBackground
+        mStatus = STATUS_DISABLED
     }
 
     private fun enable() {
+        mStatus = STATUS_ENABLED
         text = mEndWords
         mDisposable?.dispose()
         setTextColor(mEnabledTextColor!!)
-        background = mDisabledBackground
+        background = mEnabledBackground
     }
 
 }
