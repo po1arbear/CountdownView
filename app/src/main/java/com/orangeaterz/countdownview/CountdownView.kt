@@ -2,6 +2,7 @@ package com.orangeaterz.countdownview
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.text.Html
 import android.util.AttributeSet
 import android.widget.TextView
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
@@ -21,6 +22,9 @@ class CountdownView : TextView {
     private var mDisabledBackground: Drawable? = null
     private var mEnabledTextColor: Int? = null
     private var mDisabledTextColor: Int? = null
+    private var mNumberColor: Int? = null
+    private var mSuffixColor: Int? = null
+    private var mSuffixText: String? = ""
 
     constructor(context: Context?) : this(context, null)
 
@@ -32,8 +36,15 @@ class CountdownView : TextView {
         mEnabledBackground = typedArray?.getDrawable(R.styleable.CountdownView_enableBackground)
         mDisabledTextColor = typedArray?.getColor(R.styleable.CountdownView_disabledTextColor, 0)
         mEnabledTextColor = typedArray?.getColor(R.styleable.CountdownView_enabledTextColor, 0)
+        mNumberColor = typedArray?.getColor(R.styleable.CountdownView_numberColor, 0)
+        mSuffixColor = typedArray?.getColor(R.styleable.CountdownView_suffixColor, 0)
+        mSuffixText = typedArray?.getString(R.styleable.CountdownView_suffixText)
         typedArray?.recycle()
+
     }
+
+//    tv.setText(Html.fromHtml( "<font color=#FF504B>"+Str1+"</font> "+ "<font color=#696969>"+Str2+"</font>"));
+
 
     fun start(lifecycleProvider: MainActivity) {
         Observable.interval(0, 1, TimeUnit.SECONDS)
@@ -55,7 +66,13 @@ class CountdownView : TextView {
                         enable()
                     } else {
                         disable()
-                        text = (mTimeOut!! - t).toString()
+                        val number = (mTimeOut!! - t).toString()
+//                        text = number
+//    tv.setText(Html.fromHtml( "<font color=#FF504B>"+Str1+"</font> "+ "<font color=#696969>"+Str2+"</font>"));
+
+                        text =
+                                Html.fromHtml("<font color=$mNumberColor>$number</font> <font color=$mSuffixColor>$mSuffixText</font>")
+
                         mListener?.onProgress(mTimeOut!! - t)
                     }
                 }
@@ -105,7 +122,7 @@ class CountdownView : TextView {
     }
 
     private fun disable() {
-        setTextColor(mDisabledTextColor!!)
+//        setTextColor(mDisabledTextColor!!)
         background = mEnabledBackground
     }
 

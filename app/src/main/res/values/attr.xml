@@ -5,6 +5,9 @@
         <attr name="disabledTextColor" format="color|reference"/>
         <attr name="enableBackground" format="reference"/>
         <attr name="disableBackground" format="reference"/>
+        <attr name="numberColor" format="color|reference"/>
+        <attr name="suffixColor" format="color|reference"/>
+        <attr name="suffixText" format="string|reference"/>
 
     </declare-styleable>
 </resources>

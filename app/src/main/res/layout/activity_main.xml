@@ -9,7 +9,7 @@
 
     <com.orangeaterz.countdownview.CountdownView
             android:id="@+id/countdownView"
-            android:layout_width="86dp"
+            android:layout_width="wrap_content"
             android:padding="10dp"
             android:layout_height="wrap_content"
             tools:text="Hello World!"
@@ -21,6 +21,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:suffixText="s后重新获取"
+            app:suffixColor="#cccccc"
+            app:numberColor="#cccccc"
+    />
 
 </android.support.constraint.ConstraintLayout>
