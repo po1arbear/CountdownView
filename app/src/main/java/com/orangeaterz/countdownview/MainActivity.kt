@@ -9,7 +9,21 @@ class MainActivity : RxAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        countdownView.endWords("重新点击")
-            .start(this)
+        countdownView.endWords("重新获取")
+            .setOnCountdownListener(object : CountdownView.OnCountdownListener {
+                override fun onError(e: Throwable) {
+                }
+
+                override fun onEnd() {
+                }
+
+                override fun onProgress(progress: Long) {
+                }
+
+                override fun onStart() {
+                }
+
+            }).start(this)
+
     }
 }

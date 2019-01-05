@@ -9,12 +9,13 @@
 
     <com.orangeaterz.countdownview.CountdownView
             android:id="@+id/countdownView"
-            android:layout_width="wrap_content"
+            android:layout_width="86dp"
             android:padding="10dp"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:enableBackground="@color/colorAccent"
-            app:disableBackground="@color/colorPrimary"
+            tools:text="Hello World!"
+            android:gravity="center"
+            app:enableBackground="@drawable/bg_countdown"
+            app:disableBackground="@drawable/bg_countdown"
             app:enabledTextColor="@android:color/white"
             app:disabledTextColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 
 class CountdownView : TextView {
     private var mListener: OnCountdownListener? = null
-    private var mTimeOut: Long? = 60
+    private var mTimeOut: Long? = 20
     private var mDisposable: Disposable? = null
     private var mEndWords: String? = ""
     private var mEnabledBackground: Drawable? = null
@@ -31,7 +31,7 @@ class CountdownView : TextView {
         mDisabledBackground = typedArray?.getDrawable(R.styleable.CountdownView_disableBackground)
         mEnabledBackground = typedArray?.getDrawable(R.styleable.CountdownView_enableBackground)
         mDisabledTextColor = typedArray?.getColor(R.styleable.CountdownView_disabledTextColor, 0)
-        mEnabledTextColor = typedArray?.getColor(R.styleable.CountdownView_enableBackground, 0)
+        mEnabledTextColor = typedArray?.getColor(R.styleable.CountdownView_enabledTextColor, 0)
         typedArray?.recycle()
     }
 
@@ -52,11 +52,11 @@ class CountdownView : TextView {
                 override fun onNext(t: Long) {
                     if (mTimeOut == t) {
                         mListener?.onEnd()
-                        disable()
-                    } else {
                         enable()
-                        text = t.toString()
-                        mListener?.onProgress(t)
+                    } else {
+                        disable()
+                        text = (mTimeOut!! - t).toString()
+                        mListener?.onProgress(mTimeOut!! - t)
                     }
                 }
 
@@ -75,8 +75,9 @@ class CountdownView : TextView {
         fun onError(e: Throwable)
     }
 
-    fun setOnCountdownListener(listener: OnCountdownListener) {
+    fun setOnCountdownListener(listener: OnCountdownListener): CountdownView {
         mListener = listener
+        return this
     }
 
     fun disabledTextColor(color: Int): CountdownView {
@@ -104,14 +105,14 @@ class CountdownView : TextView {
     }
 
     private fun disable() {
-        mDisposable?.dispose()
-        text = mEndWords
         setTextColor(mDisabledTextColor!!)
         background = mEnabledBackground
     }
 
     private fun enable() {
-        setTextColor(mDisabledTextColor!!)
+        text = mEndWords
+        mDisposable?.dispose()
+        setTextColor(mEnabledTextColor!!)
         background = mDisabledBackground
     }
 
