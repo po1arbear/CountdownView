@@ -26,7 +26,6 @@ class MainActivity : RxAppCompatActivity() {
                 override fun onClick() {
                     countdownView.start(this@MainActivity)
                 }
-
             })
 
     }

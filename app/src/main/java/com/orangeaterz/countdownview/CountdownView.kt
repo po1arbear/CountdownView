@@ -7,7 +7,6 @@ import android.util.AttributeSet
 import android.widget.TextView
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.android.ActivityEvent
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -29,7 +28,6 @@ class CountdownView : TextView {
     private var mSuffixColor: Int? = null
     private var mSuffixText: String? = ""
     private var mStatus = STATUS_ENABLED
-    private var mLifecycleProvider: LifecycleProvider<ActivityEvent>? = null
 
     companion object {
         const val STATUS_DISABLED = 0x001
