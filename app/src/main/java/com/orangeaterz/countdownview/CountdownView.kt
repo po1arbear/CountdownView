@@ -139,6 +139,11 @@ class CountdownView : TextView {
         this.mDisabledBackground = drawable
     }
 
+    fun startWords(startWords: String): CountdownView {
+        this.mStartWords = startWords
+        return this
+    }
+
     fun endWords(words: String): CountdownView {
         this.mEndWords = words
         return this
