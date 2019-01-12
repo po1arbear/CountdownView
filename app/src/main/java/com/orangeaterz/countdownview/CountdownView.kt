@@ -1,5 +1,6 @@
 package com.orangeaterz.countdownview
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Html
@@ -19,7 +20,6 @@ class CountdownView : TextView {
     private var mListener: OnCountdownListener? = null
     private var mTimeOut: Long? = 20
     private var mDisposable: Disposable? = null
-    private var mEndWords: String? = ""
     private var mEnabledBackground: Drawable? = null
     private var mDisabledBackground: Drawable? = null
     private var mEnabledTextColor: Int? = null
@@ -27,6 +27,8 @@ class CountdownView : TextView {
     private var mNumberColor: Int? = null
     private var mSuffixColor: Int? = null
     private var mSuffixText: String? = ""
+    private var mStartWords: String? = "获取"
+    private var mEndWords: String? = "重新获取"
     private var mStatus = STATUS_ENABLED
 
     companion object {
@@ -46,7 +48,9 @@ class CountdownView : TextView {
         mEnabledTextColor = typedArray?.getColor(R.styleable.CountdownView_enabledTextColor, 0)
         mNumberColor = typedArray?.getColor(R.styleable.CountdownView_numberColor, 0)
         mSuffixColor = typedArray?.getColor(R.styleable.CountdownView_suffixColor, 0)
-        mSuffixText = typedArray?.getString(R.styleable.CountdownView_suffixText)
+        mSuffixText = typedArray?.getString(R.styleable.CountdownView_suffixText) ?: "获取验证码"
+        mStartWords = typedArray?.getString(R.styleable.CountdownView_startWords) ?: "获取验证码"
+        mEndWords = typedArray?.getString(R.styleable.CountdownView_endWords) ?: "获取验证码"
         typedArray?.recycle()
         setOnClickListener {
             if (mStatus == STATUS_ENABLED && mListener != null) {
@@ -79,9 +83,7 @@ class CountdownView : TextView {
                     } else {
                         disable()
                         val number = (mTimeOut!! - t).toString()
-
-                        text =
-                                Html.fromHtml("<font color=$mNumberColor>$number</font> <font color=$mSuffixColor>$mSuffixText</font>")
+                        modePirvateCountdown(number)
                         mListener?.onProgress(mTimeOut!! - t)
                     }
                 }
@@ -93,6 +95,17 @@ class CountdownView : TextView {
             })
     }
 
+    fun stop() {
+        if (mDisposable != null) {
+            mDisposable?.dispose()
+        }
+    }
+
+    fun reset() {
+        stop()
+        text = mStartWords
+        enable()
+    }
 
     interface OnCountdownListener {
         fun onStart()
@@ -134,6 +147,7 @@ class CountdownView : TextView {
     private fun disable() {
         background = mDisabledBackground
         mStatus = STATUS_DISABLED
+        setTextColor(mDisabledTextColor!!)
     }
 
     private fun enable() {
@@ -142,6 +156,17 @@ class CountdownView : TextView {
         mDisposable?.dispose()
         setTextColor(mEnabledTextColor!!)
         background = mEnabledBackground
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun modePirvateCountdown(number: String) {
+
+        text = "$mSuffixText($number" + "s)"
+    }
+
+    fun modeNormalCountdown(number: Long) {
+        text =
+                Html.fromHtml("<font color=$mNumberColor>$number</font> <font color=$mSuffixColor>$mSuffixText</font>")
     }
 
 }

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CountdownView">
-        <attr name="enabledTextColor" format="color|reference"/>
-        <attr name="disabledTextColor" format="color|reference"/>
-        <attr name="enableBackground" format="reference"/>
-        <attr name="disableBackground" format="reference"/>
-        <attr name="numberColor" format="color|reference"/>
-        <attr name="suffixColor" format="color|reference"/>
-        <attr name="suffixText" format="string|reference"/>
+        <attr name="enabledTextColor" format="color|reference" />
+        <attr name="disabledTextColor" format="color|reference" />
+        <attr name="enableBackground" format="reference" />
+        <attr name="disableBackground" format="reference" />
+        <attr name="numberColor" format="color|reference" />
+        <attr name="suffixColor" format="color|reference" />
+        <attr name="suffixText" format="string|reference" />
+        <attr name="startWords" format="string|reference" />
+        <attr name="endWords" format="string|reference" />
 
     </declare-styleable>
 </resources>
