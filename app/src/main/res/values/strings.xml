@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CountdownView</string>
+    <string name="resend">重新获取</string>
+    <string name="send_code">点击发送</string>
 </resources>
