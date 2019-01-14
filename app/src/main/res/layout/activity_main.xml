@@ -23,6 +23,7 @@
             app:suffixText="S后重新获取"
             app:suffixColor="#cccccc"
             app:numberColor="#ffffff"
+            app:timeOut="60"
     />
 
 </android.support.constraint.ConstraintLayout>

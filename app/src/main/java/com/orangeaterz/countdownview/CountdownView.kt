@@ -53,7 +53,7 @@ class CountdownView : TextView {
         mStartWords = typedArray?.getString(R.styleable.CountdownView_startWords) ?:
                 context?.getString(R.string.send_code)
         mEndWords = typedArray?.getString(R.styleable.CountdownView_endWords) ?: context?.getString(R.string.resend)
-        mTimeOut = typedArray?.getIndex(R.styleable.CountdownView_timeOut)?.toLong()
+        mTimeOut = typedArray?.getInt(R.styleable.CountdownView_timeOut, 20)?.toLong()
         typedArray?.recycle()
         setOnClickListener {
             if (mStatus == STATUS_ENABLED && mListener != null) {
