@@ -11,20 +11,9 @@ class MainActivity : RxAppCompatActivity() {
         setContentView(R.layout.activity_main)
         countdownView.bind(this)
         countdownView
-            .setOnCountdownListener(object : CountdownView.OnCountdownListener {
-                override fun onError(e: Throwable) {
-                }
-
-                override fun onEnd() {
-                }
-
-                override fun onProgress(progress: Long) {
-                }
-
-                override fun onStart() {
-                }
-
+            .setOnCountdownListener(object : CountdownView.AbsCountdownListener() {
                 override fun onClick() {
+                    super.onClick()
                     countdownView.start()
                 }
             })
