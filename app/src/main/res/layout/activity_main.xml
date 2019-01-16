@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -14,6 +14,7 @@
             android:layout_height="wrap_content"
             android:text="@string/send_code"
             android:gravity="center"
+            android:layout_centerInParent="true"
             app:enableBackground="@drawable/bg_enabled"
             app:disableBackground="@drawable/bg_disabled"
             android:background="@drawable/bg_enabled"
@@ -26,4 +27,4 @@
             app:timeOut="60"
     />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

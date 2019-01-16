@@ -117,6 +117,7 @@ class CountdownView : TextView {
 
     fun restart() {
         reset()
+        start()
     }
 
     interface OnCountdownListener {
