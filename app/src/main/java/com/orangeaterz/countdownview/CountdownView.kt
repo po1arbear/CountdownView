@@ -129,23 +129,18 @@ class CountdownView : TextView {
 
     abstract class AbsCountdownListener : OnCountdownListener {
         override fun onStart() {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
 
         override fun onProgress(progress: Long) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
 
         override fun onEnd() {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
 
         override fun onError(e: Throwable) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
 
         override fun onClick() {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
     }
 
