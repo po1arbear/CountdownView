@@ -21,7 +21,7 @@
             android:textColor="#ffffff"
             app:enabledTextColor="@android:color/white"
             app:disabledTextColor="#ffffff"
-            app:suffixText="S后重新获取"
+            app:suffixText="重新获取"
             app:suffixColor="#cccccc"
             app:numberColor="#ffffff"
             app:timeOut="60"
